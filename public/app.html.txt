@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Diagnóstico</title>
+</head>
+<body>
+  <h1>Diagnóstico Personalizado</h1>
+
+  <textarea id="obs" placeholder="Escreva suas observações aqui"></textarea><br><br>
+  <button onclick="gerar()">Gerar plano</button>
+
+  <pre id="resultado"></pre>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    async function gerar() {
+      const user = netlifyIdentity.currentUser();
+      const token = user.token.access_token;
+
+      const res = await fetch("/.netlify/functions/gerar-plano", {
+        method: "POST",
+        headers: {
+          "Authorization": token
+        },
+        body: JSON.stringify({
+          respostas: { exemplo: "teste" },
+          observacoes: document.getElementById("obs").value
+        })
+      });
+
+      const data = await res.json();
+      document.getElementById("resultado").innerText = data.resultado;
+    }
+  </script>
+</body>
+</html>

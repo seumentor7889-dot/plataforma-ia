@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+<body>
+  <h2>Acessar plataforma</h2>
+  <button onclick="login()">Entrar</button>
+
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+  <script>
+    function login() {
+      netlifyIdentity.open();
+    }
+
+    netlifyIdentity.on("login", () => {
+      window.location.href = "/app.html";
+    });
+  </script>
+</body>
+</html>
